@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {tokenLogin, axiosLogin} = React.useContext(MyContext);
+  const {tokenLogin, axiosLogin, checkTokenLogin} = React.useContext(MyContext);
   const [skipLogin, setSkipLogin] = useState('');
 
   const handleClick = async () => {
@@ -14,17 +14,11 @@ function Login() {
     setPassword('');
   };
 
-  const checkTokenLogin = () => {
-    const tokenLoginInLocalStorage = localStorage.getItem('tokenLogin');
-
-    setSkipLogin(!tokenLoginInLocalStorage ? false : true);
-  }
-
   useEffect(() => {
-    async function checkTokenLoginInLocalStorage() {
-      await checkTokenLogin();
+    async function checkToken() {
+      setSkipLogin(checkTokenLogin());
     }
-    checkTokenLogin();
+    checkToken();
   }, []);
 
   return (

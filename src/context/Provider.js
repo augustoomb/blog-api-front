@@ -19,8 +19,13 @@ function Provider({ children }) {
     }
   }
 
+  const checkTokenLogin = () => {
+   return localStorage.getItem('tokenLogin');
+   // TODO: implementar lógica real para averiguar se token é válido
+  }
+
   const context = {
-    tokenLogin, axiosLogin
+    tokenLogin, axiosLogin, checkTokenLogin
   }
 
   return (
