@@ -20,12 +20,21 @@ function Provider({ children }) {
   }
 
   const checkTokenLogin = () => {
-   return localStorage.getItem('tokenLogin');
-   // TODO: implementar lógica real para averiguar se token é válido
+    const token = localStorage.getItem('tokenLogin');
+    if (token === undefined) {
+      return false;
+    } else {
+      setTokenLogin({ token })
+      return true;
+    }
+    // TODO: implementar lógica real para averiguar se token é válido
   }
 
+  // const context = {
+  //   tokenLogin, axiosLogin, checkTokenLogin,
+  // }
   const context = {
-    tokenLogin, axiosLogin, checkTokenLogin
+    axiosLogin, tokenLogin, checkTokenLogin
   }
 
   return (

@@ -1,5 +1,6 @@
 import Login from './pages/login';
 import Register from './pages/register';
+import Category from './pages/category';
 import Home from './pages/home';
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Provider from './context/Provider';
@@ -18,10 +19,13 @@ function App() {
     <Provider>
       <Routes>
         <Route exact path="/" element={<Login/>} />
-        <Route exact path="/register" element={<Register/>} />
+        <Route exact path="/register" element={<Register/>} />        
         {/* <Route path="/home" element={<Home/>} /> */}
         <Route exact path='/home' element={<PrivateRoute/>}>
           <Route exact path='/home' element={<Home/>}/>
+        </Route>
+        <Route exact path='/categories' element={<PrivateRoute/>}>
+          <Route exact path='/categories' element={<Category/>}/>
         </Route>
       </Routes>
     </Provider>
