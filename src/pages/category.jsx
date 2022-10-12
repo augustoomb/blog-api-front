@@ -1,44 +1,52 @@
+import React, { useState, useEffect } from 'react';
+// import MyContext from '../context/MyContext';
 import axios from 'axios';
-import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import MyContext from '../context/MyContext';
 
 function Category() {
-  const [categories, setCategories] = useState('');
-  const {tokenLogin} = React.useContext(MyContext);
+  // const {tokenLogin} = React.useContext(MyContext);
+  const [categoriesState, setCategoriesState] = useState();
 
-  // const getCategories = async () => {
-    
-  //   try {
-  //     const responseCategories = await axios.get('http://localhost:3000/categories',
-  //     {
-  //       headers: {
-  //         'Authorization': `${tokenLogin}`
-  //       }
-  //     });
-  //     if(responseCategories.status === 200) {
-  //       console.log(JSON.stringify(responseCategories.data));
-  //     }
-  //   } catch (error) {
-      
-  //   }
-  // };
+  async function getCategories() {
+    const categories = await axios.get('http://localhost:3000/categories', {
+      headers: {
+        // 'Authorization': JSON.parse(tokenLogin.token)
+        'Authorization': JSON.parse(localStorage.getItem('tokenLogin'))
+      }
+    })
+    setCategoriesState(categories.data);
+    // console.log(categories.data);
+  }
 
-  // useEffect(() => {
-  //   // getCategories();
-  //   console.log(`Teste: ${tokenLogin}`);
-  // }, []);
-
+  useEffect(() => {    
+    getCategories();
+  }, []);
+  
   return (
-    <form>
+    <div>
       <h1>Categorias</h1>
-      <table>
-        <th>ID</th>
-        <th>Nome</th>
-        <th>Actions</th>
-      </table>
-    </form>
+      <h1>{categoriesState ? categoriesState[0].name : null}</h1>
+      {
+        categoriesState
+          ? (
+            <table>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Actions</th>
+              </tr>
+              { categoriesState.forEach((category) => {
+                <tr key={ category.id }>
+                  <td>{ category.id }</td>
+                  <td>{ category.name }</td>
+                  <td>teste</td>
+                </tr>
+              }) }        
+            </table>
+          )
+          :
+          <h4>Loading ...</h4>
+      }
+    </div>
   )
 }
 

@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import MyContext from '../context/MyContext';
 import { Navigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const {axiosLogin, tokenLogin, checkTokenLogin} = React.useContext(MyContext);
+  const {axiosLogin, tokenLogin} = React.useContext(MyContext);
 
   const handleClick = async () => {
     await axiosLogin(email, password);
@@ -13,12 +13,12 @@ function Login() {
     setPassword('');
   };
 
-  useEffect(() => {
-    async function checkToken() {
-      checkTokenLogin();
-    }
-    checkToken();
-  }, []);
+  // useEffect(() => {
+  //   async function checkToken() {
+  //     checkTokenLogin();
+  //   }
+  //   checkToken();
+  // }, []);
 
   return (
     <form>

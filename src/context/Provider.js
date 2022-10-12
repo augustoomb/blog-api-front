@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MyContext from './MyContext';
 import axios from 'axios';
 
@@ -30,9 +30,13 @@ function Provider({ children }) {
     // TODO: implementar lógica real para averiguar se token é válido
   }
 
-  // const context = {
-  //   tokenLogin, axiosLogin, checkTokenLogin,
-  // }
+  
+
+  useEffect(() => {
+    checkTokenLogin();
+  }, []);
+
+
   const context = {
     axiosLogin, tokenLogin, checkTokenLogin
   }
